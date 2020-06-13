@@ -38,7 +38,7 @@ namespace SnakeOnCSharp
             if (b is null)
                 return false;
 
-            return object.ReferenceEquals(a,b) || (a.X == b.X && a.Y == b.Y);
+            return ReferenceEquals(a,b) || (a.X == b.X && a.Y == b.Y);
         }
         public static bool operator !=(Vector2 a, Vector2 b)
         {

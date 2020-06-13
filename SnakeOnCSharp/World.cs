@@ -12,8 +12,6 @@ namespace SnakeOnCSharp
 
         public int GHeight { get; private set; }
 
-
-
         public World(int Width = 50, int Height = 50)
         {
             GWidth = Width;
@@ -39,13 +37,6 @@ namespace SnakeOnCSharp
             if (pos == null)
                 pos = obj.Position;
 
-            /*if (obj.GetType() == typeof(Food) && Get(pos).GetType() == typeof(SnakePeace))
-            {
-
-                Console.WriteLine();
-            
-            }*/
-
             obj.ChangePosition += OnPosition;
             var coord = ConverseCoord(pos);
             Get(obj.Position).ChangePosition -= OnPosition;
@@ -64,12 +55,6 @@ namespace SnakeOnCSharp
                     if((obj = Get(new Vector2(j,i))).GetType() == typeof(SceneObject))
                     {
                         coords.Add(obj.Position);
-                        if (obj.Position != new Vector2(j, i))
-                        {
-
-                            //Console.WriteLine();
-
-                        }
                     }
                 }
 
@@ -136,11 +121,11 @@ namespace SnakeOnCSharp
 
         private Vector2 OnPosition(object sender, Vector2 position)
         {
-                var pos = NormalizeCoord(position);
-                var obj = (IObject)sender;
-                Add(new SceneObject(obj.Position));
-                Add(obj, pos);
-                return pos;
+            var pos = NormalizeCoord(position);
+            var obj = (IObject)sender;
+            Add(new SceneObject(obj.Position));
+            Add(obj, pos);
+            return pos;
         }
 
         public void Remove(IObject obj)

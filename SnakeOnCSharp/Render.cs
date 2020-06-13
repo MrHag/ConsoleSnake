@@ -11,8 +11,6 @@ namespace SnakeOnCSharp
         public Render(World wrld)
         {
             world = wrld;
-            Console.SetWindowSize(world.GWidth, world.GHeight);
-            Console.SetBufferSize(world.GWidth, world.GHeight);
         }
 
         public string renderImage()
@@ -23,7 +21,7 @@ namespace SnakeOnCSharp
             {
                 for (int j = 0; j < world.GWidth; j++)
                 {
-                    output += world.Get(new Vector2(j, i));
+                    output += world.Get(new Vector2(j, i)) + " ";
                 }
             }
 
@@ -32,12 +30,12 @@ namespace SnakeOnCSharp
 
         public void WriteToConsole(string input)
         {
-            if (Console.WindowHeight != world.GHeight || Console.WindowWidth != world.GWidth)
+            if (Console.WindowHeight != world.GHeight || Console.WindowWidth != world.GWidth * 2 || Console.BufferHeight != world.GHeight|| Console.BufferWidth != world.GWidth * 2)
             {
                 try
                 {
-                    Console.SetWindowSize(world.GWidth, world.GHeight);
-                    Console.SetBufferSize(world.GWidth, world.GHeight);
+                    Console.SetWindowSize(world.GWidth * 2, world.GHeight);
+                    Console.SetBufferSize(world.GWidth * 2, world.GHeight);
                 }
                 catch (Exception)
                 { }
@@ -46,13 +44,11 @@ namespace SnakeOnCSharp
             if (Console.CursorVisible == true)
                 Console.CursorVisible = false;
 
-            Console.SetCursorPosition(0, 0);
             var buffer = Encoding.UTF8.GetBytes(input);
-            using (var stdout = Console.OpenStandardOutput(world.GHeight * world.GWidth))
+            using (var stdout = Console.OpenStandardOutput(world.GHeight * world.GWidth*2))
             {
-                // fill
                 stdout.Write(buffer, 0, buffer.Length);
-                // rinse and repeat
+                //stdout.Flush();
             }
 
         }
